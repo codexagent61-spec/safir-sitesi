@@ -239,6 +239,11 @@ alter table public.expenses       enable row level security;
 -- Anonim (giriş yapmamış) istemciler tablolara hiç dokunamasın
 revoke all on all tables in schema public from anon;
 
+-- Giriş yapmış kullanıcıların tablo erişimi (satır bazında RLS politikaları
+-- yine geçerlidir; bu yalnızca tablo seviyesindeki temel izindir).
+grant usage on schema public to authenticated;
+grant select, insert, update, delete on all tables in schema public to authenticated;
+
 -- profiles ------------------------------------------------------------------
 drop policy if exists profiles_select_own   on public.profiles;
 drop policy if exists profiles_select_admin on public.profiles;
